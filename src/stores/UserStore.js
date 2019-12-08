@@ -7,10 +7,12 @@ export default class UserStore {
   @observable phone = 'Your phone';
 
   @action data(data) {
+    console.log(data);
     if (data.firstName) {
       this.firstName = data.firstName;
     }
     if (data.lastName) {
+      console.log(data.lastName);
       this.lastName = data.lastName;
     }
     if (data.email) {
@@ -21,7 +23,7 @@ export default class UserStore {
     }
   }
 
-  @computed get fullname() {
+  @computed get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }
 }

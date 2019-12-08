@@ -61,16 +61,75 @@ class Counter extends Component {
     }
 }
 
-@inject("counterStore")
+@inject("counterStore","userStore")
 class Actions extends Component {
     firstNames  = ["John", "Fred", "Barney"];
     lastNames = ["Doe", "Flintstone", "Rubble"];
     emails = ["x@y.z", "a@b.c", "s@t.u"];
     phones = ["1234", "5678", "9012"];
-    firstNameIndex = lastNameIndex = emailIndex = phoneIndex = 0;
+    firstNameIndex = 0;
+    lastNameIndex = 0; 
+    emailIndex = 0;
+    phoneIndex = 0;
+    changeFirstName() {
+        let firstName = this.firstNames[this.firstNameIndex % this.firstNames.length];
+        this.firstNameIndex++;
+        this.props.userStore.data({firstName: firstName});
+    }
+    changeLastName() {
+        let lastName = this.lastNames[this.lastNameIndex % this.lastNames.length];
+        console.log(this.lastNameIndex);
+        this.lastNameIndex++;
+        this.props.userStore.data({lastName: lastName});
+        console.log('finished changing lastname');
+    }
+    changeEmail() {
+        let email = this.emails[this.emailIndex % this.emails.length];
+        this.emailIndex++;
+        this.props.userStore.data({email: email});
+    }
+    changePhone() {
+        let phone = this.phones[this.phoneIndex % this.phones.length];
+        this.phoneIndex++;
+        this.props.userStore.data({phone: phone});
+    }
+   
+    
     render() {
         return(
             <View style={styles.container}>
+                <View style={styles.row}>
+                    <View style={styles.buttonContainer}>
+                        <Button
+                            style={styles.button}
+                            onPress={() => this.changeFirstName()}
+                            title="Change Firstname"
+                            color="#805841" />
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <Button
+                            style={styles.button}
+                            onPress={() => this.changeLastName()}
+                            title="Change Lastname"
+                            color="#805841" />
+                    </View>
+                </View>
+                <View style={styles.row}>
+                    <View style={styles.buttonContainer}>
+                            <Button
+                                style={styles.button}
+                                onPress={() => this.changeEmail()}
+                                title="Change Email"
+                                color="#805841" />
+                        </View>
+                        <View style={styles.buttonContainer}>
+                            <Button
+                                style={styles.button}
+                                onPress={() => this.changePhone()}
+                                title="Change Phone"
+                                color="#805841" />
+                        </View>
+                    </View>
                 <View style={styles.row}>
                     <View style={styles.buttonContainer}>
                         <Button
@@ -133,13 +192,11 @@ class Phone extends Component {
 class FullName extends Component {
     render(){
         console.log("Render fullname");
-        return <Text>LastName: {this.props.userStore.fullName}</Text>;
+        return <Text>FullName: {this.props.userStore.fullName}</Text>;
     }
 }
 
-changeFirstName() {
-    
-}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -147,7 +204,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flex:1,
-        padding: 50
+        padding: 4
     },
     gridContainer: {
         flex: 1,
